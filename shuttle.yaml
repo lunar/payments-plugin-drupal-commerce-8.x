@@ -3,3 +3,4 @@ plan: false
 vars:
   service: payments-plugin-drupal-commerce-8.x
   squad: juno
+  domain: webshop-payments
