@@ -9,3 +9,11 @@ vendor
 buildInfo.json
 /.shuttle/
 /.dockerignore
+logs
+*.log
+npm-debug.log*
+.npm
+.env
+.env.production
+node_modules
+cypress.env.json

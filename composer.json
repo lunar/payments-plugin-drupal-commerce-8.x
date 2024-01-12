@@ -1,0 +1,11 @@
+{
+  "name": "lunar/plugin-drupalcommerce8",
+  "description": "Lunar drupal commerce 8 gateway development",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ionut Calara",
+      "email": "ionut.calara@gmail.com"
+    }
+  ]
+}
