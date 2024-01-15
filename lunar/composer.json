@@ -1,10 +1,10 @@
 {
     "name": "drupal/commerce_lunar",
     "type": "drupal-module",
-    "description": "Provides a Lunar payment method for Drupal Commerce.",
+    "description": "Lunar Online Payments for Drupal Commerce 8.x",
     "homepage": "https://lunar.app",
     "require": {
         "drupal/commerce": "^2.28",
-        "paylike/php-api": "^1.0"
+        "lunar/payments-api-sdk": "^1.0"
     }
 }

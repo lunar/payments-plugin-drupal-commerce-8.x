@@ -6,9 +6,9 @@
 function commerce_lunar_requirements($phase) {
   $requirements = [];
   if ($phase == 'install') {
-    if (!class_exists('\Paylike\Paylike')) {
+    if (!class_exists('\Lunar\Lunar')) {
       $requirements['commerce_lunar_library'] = [
-        'description' => t('Lunar requires the Paylike PHP Library <a href="@url" target="_blank">@url</a>.', ['@url' => 'https://github.com/paylike/php-api/releases']),
+        'description' => t('Lunar requires the Lunar SDK Library <a href="@url" target="_blank">@url</a>.', ['@url' => 'https://github.com/lunar/payments-api-sdk/releases']),
         'severity' => REQUIREMENT_ERROR,
       ];
     }

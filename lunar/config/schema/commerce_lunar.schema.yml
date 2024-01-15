@@ -1,18 +1,39 @@
 commerce_payment.commerce_payment_gateway.plugin.lunar:
   type: commerce_payment_gateway_configuration
   mapping:
+    app_key:
+      type: string
+      label: 'App key'
     public_key:
       type: string
-      label: 'Public API key'
-    private_key:
+      label: 'Public key'
+    logo_url:
       type: string
-      label: 'Private API key'
-    payment_method_title:
-      type: string
-      label: 'Payment method title'
-    payment_method_description:
+      label: 'Logo URL'
+    description:
       type: string
       label: 'Payment method description'
-    popup_title:
+    shop_title:
       type: string
-      label: 'Payment popup title'
+      label: 'Shop title'
+commerce_payment.commerce_payment_gateway.plugin.lunarmobilepay:
+  type: commerce_payment_gateway_configuration
+  mapping:
+    app_key:
+      type: string
+      label: 'App key'
+    public_key:
+      type: string
+      label: 'Public key'
+    configuration_id:
+      type: string
+      label: 'Configuration ID'
+    logo_url:
+      type: string
+      label: 'Logo URL'
+    description:
+      type: string
+      label: 'Payment method description'
+    shop_title:
+      type: string
+      label: 'Shop title'
