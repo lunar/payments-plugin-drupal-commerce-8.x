@@ -2,19 +2,21 @@
 
 namespace Drupal\commerce_lunar\Plugin\Commerce\PaymentGateway;
 
+use Drupal\commerce_payment\Plugin\Commerce\PaymentGateway\OffsitePaymentGatewayBase;
 use Drupal\commerce_order\Entity\Order;
 use Drupal\commerce_order\Entity\OrderInterface;
 use Drupal\commerce_payment\Entity\PaymentInterface;
 use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 use Drupal\commerce_payment\Exception\InvalidRequestException;
 use Drupal\commerce_payment\Exception\PaymentGatewayException;
+use Drupal\commerce_payment\PaymentMethodStorageInterface;
 use Drupal\commerce_payment\PaymentMethodTypeManager;
 use Drupal\commerce_payment\PaymentTypeManager;
-use Drupal\commerce_payment\Plugin\Commerce\PaymentGateway\OffsitePaymentGatewayBase;
 use Drupal\commerce_price\Price;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Provides the Off-site payment gateway.
@@ -22,7 +24,7 @@ use Drupal\Core\Form\FormStateInterface;
  * @CommercePaymentGateway(
  *   id = "lunar",
  *   label = "Lunar Card",
- *   display_label = "Lunar Card",
+ *   display_label = "Card",
  *   forms = {
  *     "offsite-payment" = "\Drupal\commerce_lunar\PluginForm\PaymentLunarForm",
  *   },
@@ -61,7 +63,6 @@ class Lunar extends OffsitePaymentGatewayBase implements LunarInterface
   public function defaultConfiguration()
   {
     return [
-      'mode' => 'live',
       'transaction_type' => 'delayed',
       'description' => 'Secure payment with '.($this->isMobilePay ? 'MobilePay' : 'card'). ' via © Lunar',
       'shop_title' => \Drupal::config('system.site')->get('name'),
@@ -118,7 +119,7 @@ class Lunar extends OffsitePaymentGatewayBase implements LunarInterface
           'instant' => $this->t('Instant'),
         ],
         '#default_value' => $this->configuration['transaction_type'],
-        '#description' => $this->t('For electronic products you can choose Instant. The funds are captured right after order completion. Choose delayed otherwise.'),
+        '#description' => $this->t('If you deliver your product instantly (e.g. a digital product), choose Instant mode. If not, use Delayed.'),
       ],
       'description' => [
         '#type' => 'textarea',
