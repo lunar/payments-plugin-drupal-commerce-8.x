@@ -251,7 +251,8 @@ class LunarForm extends PaymentOffsiteForm
     ];
 
     if ($billingProfile) {
-      $addressInfo = array($billingProfile->get('address')->first());
+      $addressInfo = $billingProfile->get('address')->first()->toArray();
+
       $data['address'] = implode(', ', array_filter([
         $addressInfo['postal_code'],
         $addressInfo['country_code'],
