@@ -8,11 +8,12 @@
 
 Once you have installed Drupal Commerce on your Drupal setup, follow these simple steps:
    1. Signup at [lunar.app](https://lunar.app) (it’s free)
-   2. Create an account
-   3. Create an keys for your Drupal website
-   4. Upload the contents of the `zip` file from latest release (https://github.com/lunar/payments-plugin-drupal-commerce-8.x/releases) to the modules directory and enable it on the `admin/modules page` OR run `composer require drupal/commerce_lunar`
-   5. Add the payment gateway from `admin/commerce/config/payment-gateways` and select one of the Lunar methods displayed under the `Plugin` section
-   6. Set capture mode to either Delayed or Instant under `Capture mode` section.
+   1. Create an account
+   1. Create an keys for your Drupal website
+   1. Upload the contents of the `zip` file from latest release (https://github.com/lunar/payments-plugin-drupal-commerce-8.x/releases) to the modules directory and enable it on the `admin/modules` page OR run `composer require drupal/commerce_lunar`
+   1. If the zip file is used, it is required to run `compose require lunar/payments-api-sdk` before installing the plugin
+   1. Add the payment gateway from `admin/commerce/config/payment-gateways` and select one of the Lunar methods displayed under the `Plugin` section
+   1. Set capture mode to either Delayed or Instant under `Capture mode` section.
 `
 
 
