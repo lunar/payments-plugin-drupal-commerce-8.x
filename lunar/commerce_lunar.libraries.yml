@@ -1,0 +1,8 @@
+form:
+  version: VERSION
+  js:
+    commerce_lunar.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once

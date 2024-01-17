@@ -1,0 +1,8 @@
+name: Commerce Lunar
+type: module
+description: 'Lunar Online Payments for Drupal Commerce 8.x'
+package: Commerce (contrib)
+version: 8.x-1.0
+core: 8.x
+dependencies:
+  - commerce:commerce_payment

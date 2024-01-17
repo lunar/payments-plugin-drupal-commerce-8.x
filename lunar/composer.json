@@ -1,0 +1,10 @@
+{
+    "name": "drupal/commerce_lunar",
+    "type": "drupal-module",
+    "description": "Lunar Online Payments for Drupal Commerce 8.x",
+    "homepage": "https://lunar.app",
+    "require": {
+        "drupal/commerce": "^2.28",
+        "lunar/payments-api-sdk": "^1.0"
+    }
+}
