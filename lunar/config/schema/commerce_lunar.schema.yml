@@ -1,4 +1,4 @@
-commerce_payment.commerce_payment_gateway.plugin.lunar:
+commerce_payment.commerce_payment_gateway.plugin.lunar_card:
   type: commerce_payment_gateway_configuration
   mapping:
     app_key:
@@ -16,7 +16,7 @@ commerce_payment.commerce_payment_gateway.plugin.lunar:
     shop_title:
       type: string
       label: 'Shop title'
-commerce_payment.commerce_payment_gateway.plugin.lunarmobilepay:
+commerce_payment.commerce_payment_gateway.plugin.lunar_mobilepay:
   type: commerce_payment_gateway_configuration
   mapping:
     app_key:
