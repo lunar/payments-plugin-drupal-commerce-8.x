@@ -1,14 +1,6 @@
-# Drupal Commerce plugin for Lunar
-
-This plugin is *not* developed or maintained by Lunar but kindly made
-available by a user.
-
-Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
+# Lunar Online Payments for Drupal 8.x
 
 ## Supported Drupal Commerce versions
-
-[![Last succesfull test](https://log.derikon.ro/api/v1/log/read?tag=drupalcommerce8&view=svg&label=DrupalCommerce&key=ecommerce&background=00b4ff)](https://log.derikon.ro/api/v1/log/read?tag=drupalcommerce8&view=html)
-
 *The plugin has been tested with most versions of Drupal Commerce at every iteration. We recommend using the latest version of Drupal Commerce, but if that is not possible for some reason, test the plugin with your Drupal Commerce version and it would probably function properly.*
 
 
@@ -17,10 +9,10 @@ Released under the GPL V3 license: https://opensource.org/licenses/GPL-3.0
 Once you have installed Drupal Commerce on your Drupal setup, follow these simple steps:
    1. Signup at [lunar.app](https://lunar.app) (it’s free)
    2. Create an account
-   3. Create an app key for your Drupal website
-   4. Upload the ```lunar.zip``` contents to the modules directory and enable it on the `admin/modules page` OR run `composer require drupal/commerce_lunar`
-   5. Add the payment gateway from `admin/commerce/config/payment-gateways` and select "Lunar" under the Plugin section
-   6. Set transaction mode to either Auth+Capture or Auth only under "Payment process" on `admin/commerce/config/checkout-flows/manage/default
+   3. Create an keys for your Drupal website
+   4. Upload the contents of the `zip` file from latest release (https://github.com/lunar/payments-plugin-drupal-commerce-8.x/releases) to the modules directory and enable it on the `admin/modules page` OR run `composer require drupal/commerce_lunar`
+   5. Add the payment gateway from `admin/commerce/config/payment-gateways` and select one of the Lunar methods displayed under the `Plugin` section
+   6. Set capture mode to either Delayed or Instant under `Capture mode` section.
 `
 
 
@@ -29,20 +21,20 @@ Once you have installed Drupal Commerce on your Drupal setup, follow these simpl
 Under the Lunar payment method settings, you can:
  * Update the payment method text in the payment gateways list
  * Update the payment method description in the payment gateways list
- * Update the title that shows up in the payment popup
- * Add public & app keys
- * Change the capture type (Instant/Delayed)
+ * Update the title that shows up in the checkout flow
+ * Add app & public keys and other required data
+ * Change the capture mode (Instant/Delayed)
 
 
  ## How to
 
  1. Capture
-   * In Authorization+Capture mode, the orders are captured automatically
-   * In Authorization only mode you can capture an order by using the Payments tab from an order. If available the capture operation will show up. (admin/commerce/orders/ORDER_ID/payments)
+   * In "Instant" mode, the orders are captured automatically
+   * In "Delayed" mode you can capture an order by using the Payments tab from an order. If available the capture operation will show up.
  2. Refund
-   * You can refund an order by using the Payment tab from an order. If available the refund operation will show up. (admin/commerce/orders/ORDER_ID/payments)
+   * You can refund an order by using the Payment tab from an order. If available the refund operation will show up.
  3. Void
-   * You can void an order by using the Payment operations from an order. If available the void operation will show up. (admin/commerce/orders/ORDER_ID/payments)
+   * You can void an order by using the Payment operations from an order. If available the void operation will show up.
 
    ## Available features
 

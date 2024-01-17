@@ -1,11 +1,11 @@
 {
-  "name": "lunar/plugin-drupalcommerce8",
-  "description": "Lunar drupal commerce 8 gateway development",
+  "name": "lunar/payments-plugin-drupal-commerce-8.x",
+  "description": "Lunar Online Payments for Drupal 8.x",
   "license": "MIT",
   "authors": [
     {
-      "name": "Ionut Calara",
-      "email": "ionut.calara@gmail.com"
+      "name": "Lunar",
+      "email": "support@lunar.app"
     }
   ]
 }
