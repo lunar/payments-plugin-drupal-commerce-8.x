@@ -6,9 +6,7 @@ use Drupal\commerce_payment\Plugin\Commerce\PaymentGateway\OffsitePaymentGateway
 use Drupal\commerce_order\Entity\OrderInterface;
 use Drupal\commerce_payment\Entity\PaymentInterface;
 use Drupal\commerce_payment\Entity\PaymentMethodInterface;
-use Drupal\commerce_payment\Exception\InvalidRequestException;
 use Drupal\commerce_payment\Exception\PaymentGatewayException;
-use Drupal\commerce_payment\PaymentMethodStorageInterface;
 use Drupal\commerce_payment\PaymentMethodTypeManager;
 use Drupal\commerce_payment\PaymentTypeManager;
 use Drupal\commerce_price\Price;
@@ -55,6 +53,7 @@ abstract class LunarGatewayBase extends OffsitePaymentGatewayBase implements Lun
   public function defaultConfiguration()
   {
     return [
+      'collect_billing_information' => true,
       'capture_mode' => 'delayed',
       'description' => 'Secure payment with ' . ($this->isMobilePay ? 'MobilePay' : 'card') . ' via © Lunar',
       'shop_title' => \Drupal::config('system.site')->get('name'),
@@ -147,6 +146,8 @@ abstract class LunarGatewayBase extends OffsitePaymentGatewayBase implements Lun
       $this->configuration['description'] = $values['description'];
       $this->configuration['shop_title'] = $values['shop_title'];
 
+      $this->configuration['collect_billing_information'] = $this->defaultConfiguration()['collect_billing_information'];
+
       if ($this->isMobilePay) {
         $this->configuration['configuration_id'] = $values['configuration_id'];
       }
@@ -160,22 +161,17 @@ abstract class LunarGatewayBase extends OffsitePaymentGatewayBase implements Lun
   {
     $logger = \Drupal::logger('commerce_lunar');
 
-    // This creates a payment method as a
-    // part of processing the payment data returned from the gateway.
-    $payment_method_storage = $this->entityTypeManager->getStorage('commerce_payment_method');
-    assert($payment_method_storage instanceof PaymentMethodStorageInterface);
-    $payment_method = $payment_method_storage->createForCustomer(
-      'credit_card',
-      $this->parentEntity->id(),
-      $order->getCustomerId(),
-      $order->getBillingProfile()
-    );
-
     $payment_intent_id = $order->data->{self::INTENT_ID_KEY};
 
-    // The payment method is created first so that it can be attached to the
-    // generated payment transaction.
-    $this->createPaymentMethod($payment_method, $payment_intent_id);
+    try {
+      $this->apiClient->payments()->fetch($payment_intent_id);
+    } catch (\Lunar\Exception\ApiException $e) {
+      \Drupal::logger('commerce_lunar')->warning($e->getMessage());
+      throw new PaymentGatewayException($this->t('Transaction @id not found. @message', [
+        '@id' => $payment_intent_id, 
+        '@message' => $e->getMessage()]
+      ));
+    }
 
     $payment_storage = $this->entityTypeManager->getStorage('commerce_payment');
     /** @var PaymentInterface $payment */
@@ -186,7 +182,6 @@ abstract class LunarGatewayBase extends OffsitePaymentGatewayBase implements Lun
       'payment_gateway_mode' => $this->testMode ? 'test' : null,
       'order_id' => $order->id(),
       'remote_id' => $payment_intent_id,
-      'payment_method' => $payment_method,
       'remote_state' => $request->query->get('payment_status'),
     ]);
 
@@ -201,33 +196,6 @@ abstract class LunarGatewayBase extends OffsitePaymentGatewayBase implements Lun
     }
 
     $logger->info('Payment information saved successfully. Transaction reference: ' . $payment_intent_id);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function createPaymentMethod(PaymentMethodInterface $payment_method, $transaction_id)
-  {
-    $transaction = $this->getTransaction($transaction_id);
-    if (isset($transaction['authorisationCreated']) && $transaction['authorisationCreated'] === true) {
-      $payment_method->setRemoteId($transaction_id);
-      $payment_method->save();
-    } else {
-      throw new PaymentGatewayException($this->t('Transaction failed. Transaction @id.', ['@id' => $transaction['id']]));
-    }
-  }
-
-  /**
-   * @return array
-   */
-  protected function getTransaction($transactionId)
-  {
-    try {
-      return $this->apiClient->payments()->fetch($transactionId);
-    } catch (\Lunar\Exception\ApiException $e) {
-      \Drupal::logger('commerce_lunar')->warning($e->getMessage());
-      throw new InvalidRequestException($this->t('Transaction @id not found. @message', ['@id' => $transactionId, '@message' => $e->getMessage()]));
-    }
   }
 
   /**
